@@ -9,7 +9,7 @@ class CouponServiceSpec extends Specification {
         Map<String, Float> productosFavoritos = Map.of()
 
         when:
-        def productosMasCaros = new CouponService().calculate(productosFavoritos, 100.00f)
+        def productosMasCaros = new CuponService().calculate(productosFavoritos, 100.00f)
 
         then:
         productosMasCaros == []
@@ -20,7 +20,7 @@ class CouponServiceSpec extends Specification {
         def productosFavoritos = ["MLA1": precioProducto1]
 
         when:
-        def productosMasCaros = new CouponService().calculate(productosFavoritos, valorCupon)
+        def productosMasCaros = new CuponService().calculate(productosFavoritos, valorCupon)
 
         then:
         productosMasCaros == productosEsperados
@@ -41,7 +41,7 @@ class CouponServiceSpec extends Specification {
                                   "MLA15": precioProducto5]
 
         when:
-        def productosMasCaros = new CouponService().calculate(productosFavoritos, valorCupon)
+        def productosMasCaros = new CuponService().calculate(productosFavoritos, valorCupon)
 
         then:
         productosMasCaros == productosEsperados

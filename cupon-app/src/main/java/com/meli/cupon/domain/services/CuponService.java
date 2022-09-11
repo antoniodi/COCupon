@@ -2,7 +2,7 @@ package com.meli.cupon.domain.services;
 
 import java.util.*;
 
-public class CouponService {
+public class CuponService {
 
     /**
      * Encuentra la lista de productos favoritos mas costosa que se puede comprar con un cupon

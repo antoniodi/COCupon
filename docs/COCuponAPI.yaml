@@ -14,10 +14,7 @@ servers:
   - url: TBD
 tags:
   - name: Cupon
-    description: Everything about your Pets
-    externalDocs:
-      description: Find out more
-      url: http://swagger.io
+    description: Permite encontrar la lista de productos favoritos mas costosa que se puede comprar con un cupón sin superar su valor
 paths:
   /pet:
     put:

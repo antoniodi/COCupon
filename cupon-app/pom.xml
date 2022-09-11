@@ -21,6 +21,9 @@
         <java.version>17</java.version>
         <main-class>com.meli.Application</main-class>
         <spock-bom.version>2.1-groovy-3.0</spock-bom.version>
+        <finagle.core.version>22.7.0</finagle.core.version>
+        <finagle.http.version>22.7.0</finagle.http.version>
+        <javatuples.version>1.2</javatuples.version>
         <groovy.version>3.0.12</groovy.version>
         <byte-buddy.version>1.12.14</byte-buddy.version>
         <objenesis.version>3.2</objenesis.version>
@@ -42,6 +45,26 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+        <!-- Finagle is an extensible RPC system for the JVM, used to construct high-concurrency servers -->
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>finagle-core_2.13</artifactId>
+            <version>${finagle.core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.twitter</groupId>
+            <artifactId>finagle-http_2.13</artifactId>
+            <version>${finagle.http.version}</version>
+        </dependency>
+
+        <!-- To use tuples-->
+        <!-- https://mvnrepository.com/artifact/org.javatuples/javatuples -->
+        <dependency>
+            <groupId>org.javatuples</groupId>
+            <artifactId>javatuples</artifactId>
+            <version>${javatuples.version}</version>
         </dependency>
 
         <!-- Testing -->
