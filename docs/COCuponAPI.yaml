@@ -6,7 +6,7 @@ info:
     
     Algunos links de utilidad:
     - [CO Cupon repositorio](https://github.com/antoniodi/COCupon.git)
-    - [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+    - [La definicion del API para Cupon](https://github.com/antoniodi/COCupon/blob/master/docs/COCuponAPI.yaml)
   contact:
     email: anthonydicortes@gmail.com
   version: 1.0.0
