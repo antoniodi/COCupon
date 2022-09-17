@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import java.util.List;
+import java.math.RoundingMode;
 
 @RestController
 public class CuponController {
@@ -27,8 +27,8 @@ public class CuponController {
     public Mono<ResponseEntity<ListaDeCompraSugeridaResponseDto>> obtenerListaDeItemsMasCara(
         @RequestBody ItemsFavoritosYCuponRequestDto itemsFavoritosYCupon) {
         return Mono.defer(() -> {
-                final List<IdItem> idItems = itemsFavoritosYCupon.item_ids.stream().map(IdItem::new).toList();
-                final Cupon cupon = new Cupon(itemsFavoritosYCupon.amount);
+                final var idItems = itemsFavoritosYCupon.item_ids.stream().map(IdItem::new).toList();
+                final var cupon = new Cupon(itemsFavoritosYCupon.amount);
                 return cuponService.obtenerListaDeCompraSugerida(idItems, cupon);
             }).map(CuponController::toListaDeCompraSugeridaResponseDto)
             .map(ResponseEntity::ok);
@@ -36,9 +36,9 @@ public class CuponController {
 
     private static ListaDeCompraSugeridaResponseDto toListaDeCompraSugeridaResponseDto(
         ListaDeCompraSugerida listaDeCompraSugerida) {
-        ListaDeCompraSugeridaResponseDto dto = new ListaDeCompraSugeridaResponseDto();
-        dto.total = listaDeCompraSugerida.getTotal();
-        dto.item_ids = listaDeCompraSugerida.getItemsSugeridos().stream().map(IdItem::getValor).toList();
+        final var dto = new ListaDeCompraSugeridaResponseDto();
+        dto.total = listaDeCompraSugerida.total().setScale(2, RoundingMode.HALF_UP);
+        dto.item_ids = listaDeCompraSugerida.itemsSugeridos().stream().map(IdItem::valor).toList();
         return dto;
 
     }

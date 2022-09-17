@@ -12,7 +12,7 @@ public interface CuponService {
     /**
      * Encuentra la lista de compra sugerida de mayor valor que se puede comprar con un cupon
      * sin superar su valor
-     * @param itemsFavoritos Lista de productos favoritos de un cliente
+     * @param itemsFavoritos Lista de items favoritos de un cliente
      * @param cupon Valor del cupon
      * @return la lista de compra sugerida de mayor valor que se puede comprar con un cupon
      * sin superar su valor

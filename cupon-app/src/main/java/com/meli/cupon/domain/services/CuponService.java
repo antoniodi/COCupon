@@ -5,27 +5,33 @@ import java.util.*;
 public class CuponService {
 
     /**
-     * Encuentra la lista de productos favoritos mas costosa que se puede comprar con un cupon
+     * Encuentra la lista de items favoritos mas costosa que se puede comprar con un cupon
      * sin superar su valor
      *
-     * @param items Lista de productos favoritos de un cliente con su respectivos valor
+     * @param items  Lista de items favoritos de un cliente con su respectivos valor
      * @param amount Valor del cupon
-     * @return la lista de productos favoritos mas costosa que se puede comprar con un cupon
+     * @return la lista de items favoritos mas costosa que se puede comprar con un cupon
      */
-    List<String> calculate(Map<String, Float> items, Float amount) {
+    public List<String> calculate(Map<String, Float> items, Float amount) {
 
-        final Map.Entry<String, Float> productosComprables = items.entrySet().stream()
+        final var itemsComprables = items.entrySet().stream()
             .filter(producto -> producto.getValue() <= amount)
             .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-            .reduce(Map.entry("", 0f), (productosFavoritosMasCaros, siguienteProductoFavorito) -> {
-                float valorProductosFavoritosMasCaros = productosFavoritosMasCaros.getValue() + siguienteProductoFavorito.getValue();
-                return valorProductosFavoritosMasCaros <= amount ?
-                    Map.entry(productosFavoritosMasCaros.getKey() + siguienteProductoFavorito.getKey() + ",", valorProductosFavoritosMasCaros) :
-                    productosFavoritosMasCaros;
+            .reduce((itemsFavoritosMasCaros, siguienteItemFavorito) -> {
+                float valoritemsFavoritosMasCaros = itemsFavoritosMasCaros.getValue() + siguienteItemFavorito.getValue();
+                return valoritemsFavoritosMasCaros <= amount ?
+                    Map.entry(itemsFavoritosMasCaros.getKey() + siguienteItemFavorito.getKey() + ",", valoritemsFavoritosMasCaros) :
+                    itemsFavoritosMasCaros;
             });
+//            .reduce(Pair.with("", 0f), (itemsFavoritosMasCaros, siguienteItemFavorito) -> {
+//                float valoritemsFavoritosMasCaros = itemsFavoritosMasCaros.getValue() + siguienteItemFavorito.getValue();
+//                return valoritemsFavoritosMasCaros <= amount ? Pair.with("", 0f) : Pair.with("", 0f);
+//                    Map.entry(itemsFavoritosMasCaros.getKey() + siguienteItemFavorito.getKey() + ",", valoritemsFavoritosMasCaros) :
+//                    itemsFavoritosMasCaros;
+//            });
 
-        return Objects.equals(productosComprables.getKey(), "") ?
-            List.of() :
-            Arrays.stream(productosComprables.getKey().split(",")).toList();
+        return itemsComprables.isEmpty() ?
+            Collections.emptyList() :
+            Arrays.stream(itemsComprables.get().getKey().split(",")).toList();
     }
 }

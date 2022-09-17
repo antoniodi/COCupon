@@ -14,7 +14,7 @@
 	<packaging>pom</packaging>
 
 	<name>cupon</name>
-	<description>CO Cupon API para encontrar la lista de productos favoritos mas costosa que se puede comprar con un cupon sin superar su valor</description>
+	<description>CO Cupon API para encontrar la lista de items favoritos mas costosa que se puede comprar con un cupon sin superar su valor</description>
 
 	<modules>
 		<module>cupon-app</module>

@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: CO Cupon API
   description: |-
-    CO Cupon es una API responsable por entregar la lista de productos favoritos mas costosa que puede ser comprada 
+    CO Cupon es una API responsable por entregar la lista de items favoritos mas costosa que puede ser comprada 
     
     Algunos links de utilidad:
     - [CO Cupon repositorio](https://github.com/antoniodi/COCupon.git)
@@ -14,7 +14,7 @@ servers:
   - url: TBD
 tags:
   - name: Cupon
-    description: Permite encontrar la lista de productos favoritos mas costosa que se puede comprar con un cupón sin superar su valor
+    description: Permite encontrar la lista de items favoritos mas costosa que se puede comprar con un cupón sin superar su valor
 paths:
   /coupon:
     post:
