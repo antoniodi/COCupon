@@ -40,7 +40,6 @@ public class CuponController {
         dto.total = listaDeCompraSugerida.total().setScale(2, RoundingMode.HALF_UP);
         dto.item_ids = listaDeCompraSugerida.itemsSugeridos().stream().map(IdItem::valor).toList();
         return dto;
-
     }
 
 }

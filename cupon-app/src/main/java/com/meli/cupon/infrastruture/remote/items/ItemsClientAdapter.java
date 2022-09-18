@@ -31,13 +31,12 @@ public class ItemsClientAdapter implements ItemsClient {
 
     private final ObjectMapper mapper;
 
-    private final WebClient webClient;
+//    private final WebClient webClient;
 
-
-    public ItemsClientAdapter(Service<Request, Response> httpClient, ObjectMapper mapper, WebClient webClient) {
+    public ItemsClientAdapter(Service<Request, Response> httpClient, ObjectMapper mapper) {
         this.httpClient = httpClient;
         this.mapper = mapper;
-        this.webClient = webClient;
+//        this.webClient = webClient;
     }
 
     @Override
@@ -71,14 +70,14 @@ public class ItemsClientAdapter implements ItemsClient {
         return new Item(idItem, precioItem, true);
     }
 
-    public Mono<Item> obtenerItem2(IdItem idItem) {
-        return webClient.get()
-            .uri(uriBuilder -> uriBuilder
-                .path("/items/{id}")
-                .host(MELI_HOST)
-                .build(idItem.valor()))
-            .retrieve()
-            .bodyToMono(ItemDto.class)
-            .map(dto -> toItem(idItem, dto));
-    }
+//    public Mono<Item> obtenerItem2(IdItem idItem) {
+//        return webClient.get()
+//            .uri(uriBuilder -> uriBuilder
+//                .path("/items/{id}")
+//                .host(MELI_HOST)
+//                .build(idItem.valor()))
+//            .retrieve()
+//            .bodyToMono(ItemDto.class)
+//            .map(dto -> toItem(idItem, dto));
+//    }
 }

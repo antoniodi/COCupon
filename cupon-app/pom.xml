@@ -20,6 +20,8 @@
         <maven.compiler.target>16</maven.compiler.target>
         <java.version>17</java.version>
         <main-class>com.meli.Application</main-class>
+        <wiremock-jre8.version>2.34.0</wiremock-jre8.version>
+        <spring-webmvc.version>5.3.20</spring-webmvc.version>
         <spock-bom.version>2.1-groovy-3.0</spock-bom.version>
         <finagle.core.version>22.7.0</finagle.core.version>
         <finagle.http.version>22.7.0</finagle.http.version>
@@ -49,6 +51,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring-webmvc.version}</version>
+        </dependency>
 
         <!-- Finagle is an extensible RPC system for the JVM, used to construct high-concurrency servers -->
         <dependency>
@@ -71,6 +78,12 @@
         </dependency>
 
         <!-- Testing -->
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>${wiremock-jre8.version}</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

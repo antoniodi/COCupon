@@ -1,10 +1,12 @@
 package com.meli.cupon.application.api
 
 import com.meli.cupon.application.spi.ItemsClient
+import com.meli.cupon.domain.excepcion.MontoDelCuponInsuficienteException
 import com.meli.cupon.domain.model.entities.Cupon
 import com.meli.cupon.domain.model.entities.IdItem
 import com.meli.cupon.domain.model.entities.Item
 import reactor.core.publisher.Mono
+import reactor.test.StepVerifier
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -20,18 +22,18 @@ class CuponServiceImplSpec extends Specification {
 
     def "Obtener lista de compra sugerida cuando hay items repetidos"() {
         given: "Lista de items favoritos y un cupon"
-        def itemsFavoritos = [new IdItem ("MLA1"), new IdItem ("MLA1"), new IdItem ("MLA1")]
+        def itemsFavoritos = [new IdItem("MLA1"), new IdItem("MLA1"), new IdItem("MLA1")]
         def cupon = new Cupon(BigDecimal.TEN)
 
         and: "Item"
-        def item = new Item(new IdItem ("MLA1"), BigDecimal.ONE, true)
+        def item = new Item(new IdItem("MLA1"), BigDecimal.ONE, true)
 
         when:
         def listaDeCompraSugerida = cuponService.obtenerListaDeCompraSugerida(itemsFavoritos, cupon).block()
 
         then:
-        1 * itemsClient.obtenerItem(new IdItem ("MLA1")) >> Mono.just(item)
-        1 * domainCuponService.calculate(["MLA1" : 1f], 10f) >> ["MLA1"]
+        1 * itemsClient.obtenerItem(new IdItem("MLA1")) >> Mono.just(item)
+        1 * domainCuponService.calculate(["MLA1": 1f], 10f) >> ["MLA1"]
 
         and:
         with(listaDeCompraSugerida) {
@@ -42,27 +44,47 @@ class CuponServiceImplSpec extends Specification {
 
     def "Obtener lista de compra sugerida cuando NO hay items repetidos"() {
         given: "Lista de items favoritos y un cupon"
-        def itemsFavoritos = [new IdItem ("MLA1"), new IdItem ("MLA2"), new IdItem ("MLA3")]
+        def itemsFavoritos = [new IdItem("MLA1"), new IdItem("MLA2"), new IdItem("MLA3")]
         def cupon = new Cupon(BigDecimal.TEN)
 
-        and: "Item"
-        def item1 = new Item(new IdItem ("MLA1"), BigDecimal.ONE, true)
-        def item2 = new Item(new IdItem ("MLA2"), BigDecimal.ONE, true)
-        def item3 = new Item(new IdItem ("MLA3"), BigDecimal.ONE, true)
+        and: "Items"
+        def item1 = new Item(new IdItem("MLA1"), BigDecimal.ONE, true)
+        def item2 = new Item(new IdItem("MLA2"), BigDecimal.ONE, true)
+        def item3 = new Item(new IdItem("MLA3"), BigDecimal.ONE, true)
 
         when:
         def listaDeCompraSugerida = cuponService.obtenerListaDeCompraSugerida(itemsFavoritos, cupon).block()
 
         then:
-        1 * itemsClient.obtenerItem(new IdItem ("MLA1")) >> Mono.just(item1)
-        1 * itemsClient.obtenerItem(new IdItem ("MLA2")) >> Mono.just(item2)
-        1 * itemsClient.obtenerItem(new IdItem ("MLA3")) >> Mono.just(item3)
-        1 * domainCuponService.calculate(["MLA1" : 1f, "MLA2" : 1f, "MLA3" : 1f], 10f) >> ["MLA1", "MLA2", "MLA3"]
+        1 * itemsClient.obtenerItem(new IdItem("MLA1")) >> Mono.just(item1)
+        1 * itemsClient.obtenerItem(new IdItem("MLA2")) >> Mono.just(item2)
+        1 * itemsClient.obtenerItem(new IdItem("MLA3")) >> Mono.just(item3)
+        1 * domainCuponService.calculate(["MLA1": 1f, "MLA2": 1f, "MLA3": 1f], 10f) >> ["MLA1", "MLA2", "MLA3"]
 
         and:
         with(listaDeCompraSugerida) {
             it.total() == BigDecimal.valueOf(3f)
             it.itemsSugeridos() == [new IdItem("MLA1"), new IdItem("MLA2"), new IdItem("MLA3")]
         }
+    }
+
+    def "Obtener lista de compra sugerida cuando el monto del cupon no es suficiente para comprar al menos un item"() {
+        given: "Lista de items favoritos y un cupon"
+        def itemsFavoritos = [new IdItem("MLA1"), new IdItem("MLA2")]
+        def cupon = new Cupon(BigDecimal.TEN)
+
+        and: "Items"
+        def item1 = new Item(new IdItem("MLA1"), BigDecimal.valueOf(11), true)
+        def item2 = new Item(new IdItem("MLA2"), BigDecimal.valueOf(11), true)
+
+        1 * itemsClient.obtenerItem(new IdItem("MLA1")) >> Mono.just(item1)
+        1 * itemsClient.obtenerItem(new IdItem("MLA2")) >> Mono.just(item2)
+        1 * domainCuponService.calculate(["MLA1": 11f, "MLA2": 11f], 10f) >> []
+
+        when:
+        def listaDeCompraSugerida = cuponService.obtenerListaDeCompraSugerida(itemsFavoritos, cupon)
+
+        then:
+        StepVerifier.create(listaDeCompraSugerida).expectError(MontoDelCuponInsuficienteException).verify()
     }
 }

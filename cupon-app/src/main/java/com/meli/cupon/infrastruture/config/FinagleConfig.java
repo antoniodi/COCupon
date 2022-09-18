@@ -24,10 +24,10 @@ public class FinagleConfig {
     private static final Logger log = LoggerFactory.getLogger(FinagleConfig.class);
 
     @Bean
-    public Service<Request, Response> httpClient(
+    Service<Request, Response> httpClient(
         @Value("${wiremock.server.port:8080}") int port,
-                                                 @Value("${global-timeout:5000}") int globalTimeout,
-                                                 @Value("${request-timeout:1000}") int requestTimeout) {
+        @Value("${global-timeout:5000}") int globalTimeout,
+        @Value("${request-timeout:1000}") int requestTimeout) {
 
         Duration timeoutDuration = Duration.fromMilliseconds(globalTimeout);
         final TimeoutFilter<Request, Response> timeoutFilter = new TimeoutFilter<>(
