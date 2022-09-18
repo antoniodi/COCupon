@@ -1,6 +1,7 @@
 package com.meli.cupon.infrastruture.controler;
 
 import com.meli.cupon.application.api.CuponService;
+import com.meli.cupon.domain.excepcion.MontoDelCuponInsuficienteException;
 import com.meli.cupon.domain.model.entities.Cupon;
 import com.meli.cupon.domain.model.entities.IdItem;
 import com.meli.cupon.domain.model.entities.ListaDeCompraSugerida;
@@ -31,7 +32,12 @@ public class CuponController {
                 final var cupon = new Cupon(itemsFavoritosYCupon.amount);
                 return cuponService.obtenerListaDeCompraSugerida(idItems, cupon);
             }).map(CuponController::toListaDeCompraSugeridaResponseDto)
-            .map(ResponseEntity::ok);
+            .map(ResponseEntity::ok)
+            .onErrorResume(t -> {
+                if (t instanceof MontoDelCuponInsuficienteException)
+                    return Mono.just(ResponseEntity.noContent().build());
+                else return Mono.just(ResponseEntity.internalServerError().build());
+            });
     }
 
     private static ListaDeCompraSugeridaResponseDto toListaDeCompraSugeridaResponseDto(
