@@ -1,6 +1,9 @@
 package com.meli.cupon.domain.services;
 
+import org.javatuples.Pair;
+
 import java.util.*;
+import java.util.stream.Stream;
 
 public class CuponService {
 
@@ -17,21 +20,38 @@ public class CuponService {
         final var itemsComprables = items.entrySet().stream()
             .filter(producto -> producto.getValue() <= amount)
             .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-            .reduce((itemsFavoritosMasCaros, siguienteItemFavorito) -> {
-                float valoritemsFavoritosMasCaros = itemsFavoritosMasCaros.getValue() + siguienteItemFavorito.getValue();
-                return valoritemsFavoritosMasCaros <= amount ?
-                    Map.entry(itemsFavoritosMasCaros.getKey() + siguienteItemFavorito.getKey() + ",", valoritemsFavoritosMasCaros) :
-                    itemsFavoritosMasCaros;
-            });
-//            .reduce(Pair.with("", 0f), (itemsFavoritosMasCaros, siguienteItemFavorito) -> {
-//                float valoritemsFavoritosMasCaros = itemsFavoritosMasCaros.getValue() + siguienteItemFavorito.getValue();
-//                return valoritemsFavoritosMasCaros <= amount ? Pair.with("", 0f) : Pair.with("", 0f);
-//                    Map.entry(itemsFavoritosMasCaros.getKey() + siguienteItemFavorito.getKey() + ",", valoritemsFavoritosMasCaros) :
-//                    itemsFavoritosMasCaros;
-//            });
+            .map(entry -> Pair.with(entry.getKey(), entry.getValue()))
+            .toList();
 
-        return itemsComprables.isEmpty() ?
-            Collections.emptyList() :
-            Arrays.stream(itemsComprables.get().getKey().split(",")).toList();
+        return obtenerLosItemsSugeridos(itemsComprables, amount);
+    }
+
+    private List<String> obtenerLosItemsSugeridos(List<Pair<String, Float>> items, Float cupon) {
+        final List<Pair<List<String>, Float>> itemsSugeridos = new ArrayList<>(Collections.emptyList());
+        int numeroDeItems = items.size();
+        for (int i = 0; i < numeroDeItems; i++) {
+
+            List<Pair<String, Float>> subgrupoDeItems = Stream.concat(items.subList(i, numeroDeItems).stream(), items.subList(0, i).stream()).toList();
+            Pair<List<String>, Float> itemsMasCaros = obtenerLosItemsMasCaros(subgrupoDeItems, cupon);
+            itemsSugeridos.add(itemsMasCaros);
+        }
+        return itemsSugeridos.stream()
+            .max(Comparator.comparing(Pair::getValue1))
+            .map(Pair::getValue0)
+            .orElse(Collections.emptyList());
+    }
+
+    private Pair<List<String>, Float> obtenerLosItemsMasCaros(List<Pair<String, Float>> items, Float cupon) {
+        var valorItems = 0f;
+        final List<String> listaDeCompraSugerida = new ArrayList<>(Collections.emptyList());
+        for (Pair<String, Float> item : items) {
+
+            final var acumuladoItemsMasCaros = valorItems + item.getValue1();
+            if (acumuladoItemsMasCaros <= cupon) {
+                listaDeCompraSugerida.add(item.getValue0());
+                valorItems = acumuladoItemsMasCaros;
+            } else break;
+        }
+        return Pair.with(listaDeCompraSugerida, valorItems);
     }
 }

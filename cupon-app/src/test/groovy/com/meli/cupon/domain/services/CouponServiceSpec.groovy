@@ -32,25 +32,26 @@ class CouponServiceSpec extends Specification {
         100.01f         | 100.00f    || []
     }
 
-//    def "primer tests con spock"() {
-//        given: "items favoritos con su precio"
-//        def itemsFavoritos = ["MLA11": precioProducto1,
-//                                  "MLA12": precioProducto2,
-//                                  "MLA13": precioProducto3,
-//                                  "MLA14": precioProducto4,
-//                                  "MLA15": precioProducto5]
-//
-//        when:
-//        def itemsMasCaros = new CuponService().calculate(itemsFavoritos, valorCupon)
-//
-//        then:
-//        itemsMasCaros == itemsEsperados
-//
-//        where:
-//        precioProducto1 | precioProducto2 | precioProducto3 | precioProducto4 | precioProducto5 | valorCupon || itemsEsperados
-//        100f            | 210f            | 260f            | 80f             | 90f             | 500f       || ["MLA1”, “MLA2”, “MLA4”, “MLA5"]
-//        100f            | 210f            | 260f            | 80f             | 90f             | 100f       || ["MLA1”, “MLA2”, “MLA4”, “MLA5"]
-//        100f            | 210f            | 260f            | 80f             | 90f             | 100f       || ["MLA1”, “MLA2”, “MLA4”, “MLA5"]
-//        100f            | 210f            | 260f            | 80f             | 90f             | 100f       || ["MLA1”, “MLA2”, “MLA4”, “MLA5"]
-//    }
+    def "primer tests con spock"() {
+        given: "items favoritos con su precio"
+        def itemsFavoritos = ["MLA1": precioProducto1,
+                              "MLA2": precioProducto2,
+                              "MLA3": precioProducto3,
+                              "MLA4": precioProducto4,
+                              "MLA5": precioProducto5]
+
+        when:
+        def itemsMasCaros = new CuponService().calculate(itemsFavoritos, valorCupon)
+
+        then:
+        itemsMasCaros == itemsEsperados
+
+        where:
+        precioProducto1 | precioProducto2 | precioProducto3 | precioProducto4 | precioProducto5 | valorCupon || itemsEsperados
+        100f            | 210f            | 260f            | 80f             | 90f             | 500f       || ["MLA2", "MLA1", "MLA5", "MLA4"]
+        100f            | 110f            | 120f            | 130f            | 140f            | 100f       || ["MLA1"]
+        99f             | 210f            | 260f            | 1f              | 90f             | 100f       || ["MLA4", "MLA1"]
+        100f            | 210f            | 260f            | 80f             | 90f             | 50f        || []
+        100f            | 210f            | 260f            | 80f             | 90f             | 0f         || []
+    }
 }
