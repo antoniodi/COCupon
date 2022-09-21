@@ -14,7 +14,7 @@ Este servicio permite encontrar la lista de items favoritos mas costosa que se p
 Por favor tener el siguiente software instalado y configurado en su maquina de desarrollo local antes de comenzar con cualquier desarrollo:
 
 - Java 16
-- Scala 2.13.x
+- Scala 2.13.x (solo para los performance tests con gatling)
 - Maven
 
 ## Getting started
@@ -23,7 +23,7 @@ Por favor tener el siguiente software instalado y configurado en su maquina de d
 
     > mvn clean package
 
-2. Para iniciar el contenedor se definido en la raiz del proyecto `.` se puede realizar con el siguiente comando: Esto va ha levantar una nueva instancia de la aplicacion y la va ha exponer en el puerto 9000.
+2. Para iniciar el contenedor definido en la raiz del proyecto `.` se puede realizar con el siguiente comando: Esto va ha levantar una nueva instancia de la aplicacion y la va ha exponer en el puerto 9000.
 
     > docker-compose up
 
