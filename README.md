@@ -21,7 +21,11 @@ Por favor tener el siguiente software instalado y configurado en su maquina de d
 
 1. Construir la applicaion
 
-> mvn clean package
+    > mvn clean package
+
+2. Para iniciar el contenedor se definido en la raiz del proyecto `.` se puede realizar con el siguiente comando: Esto va ha levantar una nueva instancia de la aplicacion y la va ha exponer en el puerto 9000.
+
+    > docker-compose up
 
 ## Guia de desarrollo
 

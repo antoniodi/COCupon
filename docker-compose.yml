@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  asset:
+    image: "cupon-app"
+    build:
+      context: .
+    ports:
+      - "9000:8080"

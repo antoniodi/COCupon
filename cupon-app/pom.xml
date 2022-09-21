@@ -134,7 +134,22 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <finalName>cupon-app</finalName>
+                    <archive>
+                        <manifest>
+                            <mainClass>${main-class}</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -211,25 +226,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <!--	<build>-->
-    <!--		<finalName>${project.artifactId}</finalName>-->
-    <!--		<plugins>-->
-    <!--			<plugin>-->
-    <!--				<groupId>org.apache.maven.plugins</groupId>-->
-    <!--				<artifactId>maven-jar-plugin</artifactId>-->
-    <!--				<configuration>-->
-    <!--					<finalName>app</finalName>-->
-    <!--					<archive>-->
-    <!--						<manifest>-->
-    <!--							<mainClass>${main-class}</mainClass>-->
-    <!--							<addClasspath>true</addClasspath>-->
-    <!--							<classpathPrefix>lib/</classpathPrefix>-->
-    <!--						</manifest>-->
-    <!--					</archive>-->
-    <!--				</configuration>-->
-    <!--			</plugin>-->
-    <!--		</plugins>-->
-    <!--	</build>-->
 
 </project>

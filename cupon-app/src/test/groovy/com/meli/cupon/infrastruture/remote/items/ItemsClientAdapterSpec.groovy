@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
 import reactor.test.StepVerifier
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Subject
 
@@ -49,8 +50,8 @@ class ItemsClientAdapterSpec extends Specification {
         wireMockServer.resetAll()
     }
 
-
-    def "ObtenerItem"() {
+    @Ignore
+    def "test de integracion"() {
         print("Hola bebe${ wireMockServer.baseUrl() }--------->")
         given:
         def idItem = "MLA1"
