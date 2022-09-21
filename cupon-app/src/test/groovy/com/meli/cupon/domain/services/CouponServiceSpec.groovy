@@ -4,7 +4,7 @@ import spock.lang.Specification
 
 class CouponServiceSpec extends Specification {
 
-    def "cuando el cliente tiene no tiene ningun producto favorito"() {
+    def "cuando el cliente tiene no tiene ningun item favorito"() {
         given: "ningun items favorito"
         Map<String, Float> itemsFavoritos = Map.of()
 
@@ -15,7 +15,7 @@ class CouponServiceSpec extends Specification {
         itemsMasCaros == []
     }
 
-    def "cuando el cliente tiene un unico producto favorito"() {
+    def "cuando el cliente tiene un unico item favorito"() {
         given: "items favoritos con su precio"
         def itemsFavoritos = ["MLA1": precioProducto1]
 
@@ -32,7 +32,7 @@ class CouponServiceSpec extends Specification {
         100.01f         | 100.00f    || []
     }
 
-    def "primer tests con spock"() {
+    def "cuando el cliente tiene uno o mas items favoritoa"() {
         given: "items favoritos con su precio"
         def itemsFavoritos = ["MLA1": precioProducto1,
                               "MLA2": precioProducto2,

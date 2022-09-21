@@ -18,7 +18,7 @@ public class CuponService {
     public List<String> calculate(Map<String, Float> items, Float amount) {
 
         final var itemsComprables = items.entrySet().stream()
-            .filter(producto -> producto.getValue() <= amount)
+            .filter(item -> item.getValue() <= amount)
             .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
             .map(entry -> Pair.with(entry.getKey(), entry.getValue()))
             .toList();
