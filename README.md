@@ -27,6 +27,9 @@ Por favor tener el siguiente software instalado y configurado en su maquina de d
 
     > docker-compose up
 
+3. El microservicio se encuentra actualmente desplegado en GCP y es accesible a traves del link `https://cupon-xgnfdevtea-uc.a.run.app`, si se desea saber si esta corriendo se puede realizar a traves del metodo get up o siguiendo la url: `https://cupon-xgnfdevtea-uc.a.run.app/up`
+
+
 ## Guia de desarrollo
 
 1. Por favor tener en cuenta el siguiente articulo al realizar cambios de diseno sobre el proyecto, de modo que se sigan los principios de la arquitectura hexagonal: https://beyondxscratch.com/2017/08/19/hexagonal-architecture-the-practical-guide-for-a-clean-architecture/ 
