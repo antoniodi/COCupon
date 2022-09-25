@@ -19,15 +19,17 @@ Por favor tener el siguiente software instalado y configurado en su maquina de d
 
 ## Getting started
 
-1. Construir la applicaion
+1. Ejecutar la aplicacion en local, basta con ejecutar la clase main que se encuentra en: `src/main/java/com/meli/Application.java`
+
+2. Construir la applicaion
 
     > mvn clean package
 
-2. Para iniciar el contenedor definido en la raiz del proyecto `.` se puede realizar con el siguiente comando: Esto va ha levantar una nueva instancia de la aplicacion y la va ha exponer en el puerto 9000.
+3. Iniciar la aplicacion usando docker. Para iniciar el contenedor definido en la raiz del proyecto `.` se puede realizar con el siguiente comando: Esto va ha levantar una nueva instancia de la aplicacion y la va ha exponer en el puerto 9000.
 
     > docker-compose up
 
-3. El microservicio se encuentra actualmente desplegado en GCP y es accesible a traves del link `https://cupon-xgnfdevtea-uc.a.run.app`, si se desea saber si esta corriendo se puede realizar a traves del metodo get up o siguiendo la url: `https://cupon-xgnfdevtea-uc.a.run.app/up`
+4. El microservicio se encuentra actualmente desplegado en GCP y es accesible a traves del link `https://cupon-xgnfdevtea-uc.a.run.app`, si se desea saber si esta corriendo se puede realizar a traves del metodo get up o siguiendo la url: `https://cupon-xgnfdevtea-uc.a.run.app/up`
 
 
 ## Guia de desarrollo
