@@ -21,7 +21,7 @@
         <java.version>17</java.version>
         <main-class>com.meli.Application</main-class>
         <wiremock-jre8.version>2.34.0</wiremock-jre8.version>
-        <spring-webmvc.version>5.3.20</spring-webmvc.version>
+        <spring-webmvc.version>5.3.23</spring-webmvc.version>
         <spock-bom.version>2.1-groovy-3.0</spock-bom.version>
         <finagle.core.version>22.7.0</finagle.core.version>
         <finagle.http.version>22.7.0</finagle.http.version>

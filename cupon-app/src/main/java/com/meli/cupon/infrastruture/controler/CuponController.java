@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import reactor.core.publisher.Mono;
 
 import java.math.RoundingMode;
@@ -19,7 +20,6 @@ public class CuponController {
 
     private final CuponService cuponService;
 
-    @Autowired
     public CuponController(CuponService cuponService) {
         this.cuponService = cuponService;
     }
@@ -35,7 +35,9 @@ public class CuponController {
             .map(ResponseEntity::ok)
             .onErrorResume(t -> {
                 if (t instanceof MontoDelCuponInsuficienteException)
-                    return Mono.just(ResponseEntity.noContent().build());
+                    return Mono.just(ResponseEntity.notFound().build());
+                if (t instanceof HttpClientErrorException)
+                    return Mono.just(ResponseEntity.status(((HttpClientErrorException) t).getStatusCode()).build());
                 else return Mono.just(ResponseEntity.internalServerError().build());
             });
     }

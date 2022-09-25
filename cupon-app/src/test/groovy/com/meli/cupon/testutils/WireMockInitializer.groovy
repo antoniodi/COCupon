@@ -25,7 +25,7 @@ class WireMockInitializer implements ApplicationContextInitializer<ConfigurableA
         applicationContext.addApplicationListener(
                 applicationEvent -> {
                     if (applicationEvent instanceof ContextClosedEvent) {
-                        wireMockServer.stop();
+                        wireMockServer.stop()
                     }
                 }
         )
@@ -36,7 +36,7 @@ class WireMockInitializer implements ApplicationContextInitializer<ConfigurableA
                         "https://localhost:" + wireMockServer.httpsPort(),
                         "test.wiremock.baseurl",
                         "http://localhost:" + wireMockServer.port(),
-                        "wiremock.server.port",
+                        "server.port",
                         String.valueOf(wireMockServer.httpsPort()),
                         "test.wiremock.https-port",
                         String.valueOf(wireMockServer.httpsPort()),

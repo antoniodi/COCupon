@@ -70,7 +70,7 @@ class CuponControllerSpec extends Specification {
 //                .andExpect(MockMvcResultMatchers.jsonPath('$.total', is(480.25)))
     }
 
-    def "Respuesta 204 NO CONTENT es retornada cuando el servicio del cupon lanza la excepcion MontoDelCuponInsuficienteException"() {
+    def "Respuesta 404 NOT FOUND es retornada cuando el servicio del cupon lanza la excepcion MontoDelCuponInsuficienteException"() {
         given: "El servicio del cupon retorna MontoDelCuponInsuficienteException"
         cuponService.obtenerListaDeCompraSugerida(_ as List<IdItem>, _ as Cupon) >> Mono.error(new MontoDelCuponInsuficienteException())
 
@@ -85,10 +85,10 @@ class CuponControllerSpec extends Specification {
 
         mockMvc.perform(asyncDispatch(resultado))
                 .andDo(MockMvcResultHandlers.print())
-                .andExpect(status().isNoContent())
+                .andExpect(status().isNotFound())
     }
 
-    def "Respuesta 204 NO CONTENT es retornada cuando el servicio del cupon lanza una excepcion"() {
+    def "Respuesta 500 Internal server error es retornada cuando el servicio del cupon lanza una excepcion"() {
         given: "El servicio del cupon retorna MontoDelCuponInsuficienteException"
         cuponService.obtenerListaDeCompraSugerida(_ as List<IdItem>, _ as Cupon) >> Mono.error(new RuntimeException())
 
